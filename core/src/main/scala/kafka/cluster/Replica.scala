@@ -92,7 +92,8 @@ class Replica(val brokerId: Int,
       throw new KafkaException(s"Should not set log end offset on partition $topicPartition's local replica $brokerId")
     } else {
       _logEndOffsetMetadata = newLogEndOffset
-      trace(s"Setting log end offset for replica $brokerId for partition $topicPartition to [${_logEndOffsetMetadata}]")
+      if (isTraceEnabled)
+        trace(s"Setting log end offset for replica $brokerId for partition $topicPartition to [${_logEndOffsetMetadata}]")
     }
   }
 
@@ -142,7 +143,8 @@ class Replica(val brokerId: Int,
                                s"without attempting to delete records of the log")
     } else {
       _logStartOffset = newLogStartOffset
-      trace(s"Setting log start offset for remote replica $brokerId for partition $topicPartition to [$newLogStartOffset]")
+      if (isTraceEnabled)
+        trace(s"Setting log start offset for remote replica $brokerId for partition $topicPartition to [$newLogStartOffset]")
     }
   }
 
